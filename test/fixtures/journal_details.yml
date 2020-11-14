@@ -1,0 +1,57 @@
+---
+journal_details_01:
+  id: 1
+  journal_id: 2
+  property: attr
+  prop_key: assigned_to_id
+  old_value:
+  value: 1
+journal_details_02:
+  id: 2
+  journal_id: 3
+  property: attr
+  prop_key: assigned_to_id
+  old_value: 1
+  value: 2
+journal_details_03:
+  id: 3
+  journal_id: 4
+  property: attr
+  prop_key: assigned_to_id
+  old_value: 1
+  value: 
+journal_details_04:
+  id: 4
+  journal_id: 5
+  property: attr
+  prop_key: assigned_to_id
+  old_value:
+  value: 3
+journal_details_05:
+  id: 5
+  journal_id: 6
+  property: attr
+  prop_key: assigned_to_id
+  old_value: 3
+  value: 1
+journal_details_06:
+  id: 6
+  journal_id: 7
+  property: attr
+  prop_key: assigned_to_id
+  old_value: 1
+  value: 
+journal_details_07:
+  id: 7
+  journal_id: 8
+  property: attr
+  prop_key: assigned_to_id
+  old_value:
+  value: 3
+journal_details_08:
+  id: 8
+  journal_id: 9
+  property: attr
+  prop_key: description
+  old_value:
+  value: xxx
