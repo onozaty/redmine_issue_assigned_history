@@ -9,8 +9,8 @@ issues_01:
   priority_id: 2
   author_id: 1
   lock_version: 0
-  created_on: 2020-11-01 10:00:00 +09:00
-  updated_on: 2020-11-01 11:00:00 +09:00
+  created_on: 2020-11-01 10:00:00 +00:00
+  updated_on: 2020-11-01 11:00:00 +00:00
   start_date: 2020-11-01
   root_id: 1
   lft: 1
@@ -25,8 +25,8 @@ issues_02:
   priority_id: 2
   author_id: 1
   lock_version: 0
-  created_on: 2020-11-01 11:00:00 +09:00
-  updated_on: 2020-11-01 11:00:00 +09:00
+  created_on: 2020-11-01 11:00:00 +00:00
+  updated_on: 2020-11-01 11:00:00 +00:00
   start_date: 2020-11-01
   root_id: 2
   lft: 1
@@ -41,8 +41,8 @@ issues_03:
   priority_id: 2
   author_id: 1
   lock_version: 1
-  created_on: 2020-11-01 12:00:00 +09:00
-  updated_on: 2020-11-01 13:00:00 +09:00
+  created_on: 2020-11-01 12:00:00 +00:00
+  updated_on: 2020-11-01 13:00:00 +00:00
   start_date: 2020-11-01
   root_id: 3
   lft: 1
@@ -57,8 +57,8 @@ issues_04:
   priority_id: 2
   author_id: 1
   lock_version: 1
-  created_on: 2020-11-02 00:00:00 +09:00
-  updated_on: 2020-11-03 12:00:00 +09:00
+  created_on: 2020-11-02 00:00:00 +00:00
+  updated_on: 2020-11-03 12:00:00 +00:00
   start_date: 2020-11-02
   root_id: 4
   lft: 1
@@ -73,8 +73,8 @@ issues_05:
   priority_id: 2
   author_id: 1
   lock_version: 1
-  created_on: 2020-11-02 01:00:00 +09:00
-  updated_on: 2020-11-04 02:00:00 +09:00
+  created_on: 2020-11-02 01:00:00 +00:00
+  updated_on: 2020-11-04 02:00:00 +00:00
   start_date: 2020-11-02
   root_id: 5
   lft: 1
@@ -89,8 +89,8 @@ issues_06:
   priority_id: 2
   author_id: 1
   lock_version: 4
-  created_on: 2020-11-03 09:00:00 +09:00
-  updated_on: 2020-11-10 02:00:00 +09:00
+  created_on: 2020-11-03 09:00:00 +00:00
+  updated_on: 2020-11-10 02:00:00 +00:00
   start_date: 2020-11-03
   root_id: 6
   lft: 1

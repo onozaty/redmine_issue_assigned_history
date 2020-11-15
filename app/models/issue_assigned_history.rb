@@ -65,7 +65,12 @@ class IssueAssignedHistory
       end
     end
     
-    histories.sort_by{|history| history.changed_on}
+    histories.sort_by{|history| [history.changed_on, history.journal_id]}
+  end
+
+  def ==(other)
+    issue_id == other.issue_id && issue_subject == other.issue_subject && journal_id == other.journal_id &&
+      changed_on == other.changed_on && old_login_id == other.old_login_id && new_login_id == other.new_login_id
   end
 
   private
