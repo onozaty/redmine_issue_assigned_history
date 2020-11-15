@@ -6,10 +6,12 @@ class IssueAssignedHistoryTest < ActiveSupport::TestCase
   def setup
   end
 
-  def test_find
+  def test_after
 
-    history = IssueAssignedHistory.find
-    assert_not_nil history
+    histories = IssueAssignedHistory.after(Time.parse("2020-11-01 11:00:00 +09:00"))
+
+    p histories
+    assert_equal 10, histories.size
 
   end
 
