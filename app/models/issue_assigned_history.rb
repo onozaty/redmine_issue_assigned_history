@@ -1,27 +1,27 @@
 class IssueAssignedHistory
 
-  attr_reader :issue_id, :issue_subject, :project_id, :journal_id, :changed_on, :old_login_id, :new_login_id
+  attr_reader :issue, :journal_id, :changed_on, :old_assigned_to, :new_assigned_to
 
-  def initialize(issue_id:, issue_subject:, project_id:, journal_id:, changed_on:, old_login_id:, new_login_id:)
-    @issue_id = issue_id
-    @issue_subject = issue_subject
-    @project_id = project_id
+  def initialize(issue:, journal_id:, changed_on:, old_assigned_to:, new_assigned_to:)
+    @issue = issue
     @journal_id = journal_id
     @changed_on = changed_on
-    @old_login_id = old_login_id
-    @new_login_id = new_login_id
+    @old_assigned_to = old_assigned_to
+    @new_assigned_to = new_assigned_to
   end
 
   def self.after(changed_on)
 
-    login_id_cache = {}
+    user_cache = {}
 
-    created_issues = Issue.visible.where("#{Issue.table_name}.created_on >= ?", changed_on)
+    created_issues = Issue.visible.
+                eager_load(:status).
+                where("#{Issue.table_name}.created_on >= ?", changed_on)
 
     journals = Journal.
-                select("#{Journal.table_name}.*, #{JournalDetail.table_name}.old_value, #{JournalDetail.table_name}.value, #{Issue.table_name}.subject as issue_subject, #{Issue.table_name}.project_id").
-                joins(:issue => :project).
-                joins(:details).
+                eager_load(:details).
+                eager_load(:issue => :project).
+                eager_load(:issue => :status).
                 where(Issue.visible_condition(User.current)).
                 where("#{Journal.table_name}.journalized_type = 'Issue'").
                 where("#{Journal.table_name}.created_on >= ?", changed_on).
@@ -31,42 +31,36 @@ class IssueAssignedHistory
 
     histories = journals.map do |journal|
       IssueAssignedHistory.new(
-        issue_id: journal.journalized_id,
-        issue_subject: journal.issue_subject,
-        project_id: journal.project_id,
+        issue: journal.issue,
         journal_id: journal.id,
         changed_on: journal.created_on,
-        old_login_id: to_login_id(journal.old_value, login_id_cache),
-        new_login_id: to_login_id(journal.value, login_id_cache))
+        old_assigned_to: to_user(journal.details[0].old_value, user_cache),
+        new_assigned_to: to_user(journal.details[0].value, user_cache))
     end
 
     # Issue作成時の情報も追加
     created_issues.each do |issue|
-      history = histories.find{|history| history.issue_id == issue.id }
+      history = histories.find{|history| history.issue.id == issue.id }
 
       if history.nil? && issue.assigned_to_id.present?
         # Journalでの履歴になくて、Issueでアサインされている場合
         histories.push(
           IssueAssignedHistory.new(
-            issue_id: issue.id,
-            issue_subject: issue.subject,
-            project_id: issue.project_id,
+            issue: issue,
             journal_id: nil,
             changed_on: issue.created_on,
-            old_login_id: nil,
-            new_login_id: to_login_id(issue.assigned_to_id, login_id_cache)))
+            old_assigned_to: nil,
+            new_assigned_to: to_user(issue.assigned_to_id, user_cache)))
             
-      elsif history.present? && history.old_login_id.present?
+      elsif history.present? && history.old_assigned_to.present?
         # Journalでの履歴にあって、変更前の値が設定されていた場合
         histories.push(
           IssueAssignedHistory.new(
-            issue_id: issue.id,
-            issue_subject: issue.subject,
-            project_id: issue.project_id,
+            issue: issue,
             journal_id: nil,
             changed_on: issue.created_on,
-            old_login_id: nil,
-            new_login_id: history.old_login_id))
+            old_assigned_to: nil,
+            new_assigned_to: history.old_assigned_to))
       end
     end
     
@@ -74,26 +68,25 @@ class IssueAssignedHistory
   end
 
   def ==(other)
-    issue_id == other.issue_id && issue_subject == other.issue_subject && journal_id == other.journal_id &&
-      changed_on == other.changed_on && old_login_id == other.old_login_id && new_login_id == other.new_login_id
+    issue == other.issue && journal_id == other.journal_id && changed_on == other.changed_on &&
+      old_assigned_to == other.old_assigned_to && new_assigned_to == other.new_assigned_to
   end
 
   private
 
-  def self.to_login_id(user_id, login_id_cache)
+  def self.to_user(user_id, user_cache)
 
     if user_id.blank?
       return nil
     end
 
-    login_id = login_id_cache[user_id]
+    user = user_cache[user_id]
 
-    if login_id.nil?
+    if user.nil?
       user = User.find_by_id(user_id.to_i)
-      login_id = user.login
-      login_id_cache[user_id] = user.login
+      user_cache[user_id] = user
     end
     
-    login_id
+    user
   end
 end

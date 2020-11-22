@@ -1,92 +1,82 @@
 require File.expand_path('../../test_helper', __FILE__)
 
 class IssueAssignedHistoryTest < ActiveSupport::TestCase
-  fixtures :projects, :users, :enabled_modules, :roles, :members, :member_roles, :issues, :journals, :journal_details
+  fixtures :projects, :users, :enabled_modules, :roles, :members, :member_roles, :issue_statuses, :issues, :journals, :journal_details
 
   def setup
 
     ActiveRecord::Base.logger = Logger.new(STDOUT)
 
+    issue2 = Issue.find_by_id(2)
+    issue3 = Issue.find_by_id(3)
+    issue4 = Issue.find_by_id(4)
+    issue5 = Issue.find_by_id(5)
+    issue6 = Issue.find_by_id(6)
+
+    user1 = User.find(1)
+    user2 = User.find(2)
+    user3 = User.find(3)
+
     @history_issue2_created = IssueAssignedHistory.new(
-      issue_id: 2,
-      issue_subject: "assigned(1)",
-      project_id: 1,
+      issue: issue2,
       journal_id: nil,
       changed_on: Time.parse("2020-11-01 11:00:00 +00:00"),
-      old_login_id: nil,
-      new_login_id: "admin")
+      old_assigned_to: nil,
+      new_assigned_to: user1)
     @history_issue3_journal2 = IssueAssignedHistory.new(
-      issue_id: 3,
-      issue_subject: "not_assign -> assigned(1)",
-      project_id: 1,
+      issue: issue3,
       journal_id: 2,
       changed_on: Time.parse("2020-11-01 13:00:00 +00:00"),
-      old_login_id: nil,
-      new_login_id: "admin")
+      old_assigned_to: nil,
+      new_assigned_to: user1)
     @history_issue4_created = IssueAssignedHistory.new(
-      issue_id: 4,
-      issue_subject: "assigned(1) -> assigned(2)",
-      project_id: 1,
+      issue: issue4,
       journal_id: nil,
       changed_on: Time.parse("2020-11-02 00:00:00 +00:00"),
-      old_login_id: nil,
-      new_login_id: "admin")
+      old_assigned_to: nil,
+      new_assigned_to: user1)
     @history_issue5_created = IssueAssignedHistory.new(
-      issue_id: 5,
-      issue_subject: "assigned(1) -> not_assign",
-      project_id: 2,
+      issue: issue5,
       journal_id: nil,
       changed_on: Time.parse("2020-11-02 01:00:00 +00:00"),
-      old_login_id: nil,
-      new_login_id: "admin")
+      old_assigned_to: nil,
+      new_assigned_to: user1)
     @history_issue4_journal3 = IssueAssignedHistory.new(
-      issue_id: 4,
-      issue_subject: "assigned(1) -> assigned(2)",
-      project_id: 1,
+      issue: issue4,
       journal_id: 3,
       changed_on: Time.parse("2020-11-03 11:00:00 +00:00"),
-      old_login_id: "admin",
-      new_login_id: "jsmith")
+      old_assigned_to: user1,
+      new_assigned_to: user2)
     @history_issue5_journal4 = IssueAssignedHistory.new(
-      issue_id: 5,
-      issue_subject: "assigned(1) -> not_assign",
-      project_id: 2,
+      issue: issue5,
       journal_id: 4,
       changed_on: Time.parse("2020-11-03 11:00:00 +00:00"),
-      old_login_id: "admin",
-      new_login_id: nil)
+      old_assigned_to: user1,
+      new_assigned_to: nil)
     @history_issue6_journal5 = IssueAssignedHistory.new(
-      issue_id: 6,
-      issue_subject: "not_assign -> assigned(3) -> assigned(1) -> not_assgin -> assigned(3)",
-      project_id: 2,
+      issue: issue6,
       journal_id: 5,
       changed_on: Time.parse("2020-11-03 12:00:00 +00:00"),
-      old_login_id: nil,
-      new_login_id: "dlopper")
+      old_assigned_to: nil,
+      new_assigned_to: user3)
     @history_issue6_journal6 = IssueAssignedHistory.new(
-      issue_id: 6,
-      issue_subject: "not_assign -> assigned(3) -> assigned(1) -> not_assgin -> assigned(3)",
-      project_id: 2,
+      issue: issue6,
       journal_id: 6,
       changed_on: Time.parse("2020-11-03 20:00:00 +00:00"),
-      old_login_id: "dlopper",
-      new_login_id: "admin")
+      old_assigned_to: user3,
+      new_assigned_to: user1)
     @history_issue6_journal7 = IssueAssignedHistory.new(
-      issue_id: 6,
-      issue_subject: "not_assign -> assigned(3) -> assigned(1) -> not_assgin -> assigned(3)",
-      project_id: 2,
+      issue: issue6,
       journal_id: 7,
       changed_on: Time.parse("2020-11-04 00:00:00 +00:00"),
-      old_login_id: "admin",
-      new_login_id: nil)
+      old_assigned_to: user1,
+      new_assigned_to: nil)
     @history_issue6_journal8 = IssueAssignedHistory.new(
-      issue_id: 6,
-      issue_subject: "not_assign -> assigned(3) -> assigned(1) -> not_assgin -> assigned(3)",
-      project_id: 2,
+      issue: issue6,
       journal_id: 8,
       changed_on: Time.parse("2020-11-05 19:00:00 +00:00"),
-      old_login_id: nil,
-      new_login_id: "dlopper")
+      old_assigned_to: nil,
+      new_assigned_to: user3)
   end
 
   def test_after

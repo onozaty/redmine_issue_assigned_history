@@ -20,7 +20,7 @@ issues_02:
   tracker_id: 1
   project_id: 1
   subject: assigned(1)
-  status_id: 1
+  status_id: 2
   assigned_to_id: 1
   priority_id: 2
   author_id: 1
