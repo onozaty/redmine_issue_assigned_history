@@ -1,10 +1,11 @@
 class IssueAssignedHistory
 
-  attr_reader :issue_id, :issue_subject, :journal_id, :changed_on, :old_login_id, :new_login_id
+  attr_reader :issue_id, :issue_subject, :project_id, :journal_id, :changed_on, :old_login_id, :new_login_id
 
-  def initialize(issue_id:, issue_subject:, journal_id:, changed_on:, old_login_id:, new_login_id:)
+  def initialize(issue_id:, issue_subject:, project_id:, journal_id:, changed_on:, old_login_id:, new_login_id:)
     @issue_id = issue_id
     @issue_subject = issue_subject
+    @project_id = project_id
     @journal_id = journal_id
     @changed_on = changed_on
     @old_login_id = old_login_id
@@ -13,14 +14,15 @@ class IssueAssignedHistory
 
   def self.after(changed_on)
 
-    issue_subject_cache = {}
     login_id_cache = {}
 
-    created_issues = Issue.where("created_on >= ?", changed_on)
+    created_issues = Issue.visible.where("#{Issue.table_name}.created_on >= ?", changed_on)
 
     journals = Journal.
-                select("#{Journal.table_name}.*, #{JournalDetail.table_name}.old_value, #{JournalDetail.table_name}.value").
+                select("#{Journal.table_name}.*, #{JournalDetail.table_name}.old_value, #{JournalDetail.table_name}.value, #{Issue.table_name}.subject as issue_subject, #{Issue.table_name}.project_id").
+                joins(:issue => :project).
                 joins(:details).
+                where(Issue.visible_condition(User.current)).
                 where("#{Journal.table_name}.journalized_type = 'Issue'").
                 where("#{Journal.table_name}.created_on >= ?", changed_on).
                 where("#{JournalDetail.table_name}.property = 'attr'").
@@ -30,7 +32,8 @@ class IssueAssignedHistory
     histories = journals.map do |journal|
       IssueAssignedHistory.new(
         issue_id: journal.journalized_id,
-        issue_subject: to_issue_subject(journal.journalized_id, issue_subject_cache),
+        issue_subject: journal.issue_subject,
+        project_id: journal.project_id,
         journal_id: journal.id,
         changed_on: journal.created_on,
         old_login_id: to_login_id(journal.old_value, login_id_cache),
@@ -47,6 +50,7 @@ class IssueAssignedHistory
           IssueAssignedHistory.new(
             issue_id: issue.id,
             issue_subject: issue.subject,
+            project_id: issue.project_id,
             journal_id: nil,
             changed_on: issue.created_on,
             old_login_id: nil,
@@ -58,6 +62,7 @@ class IssueAssignedHistory
           IssueAssignedHistory.new(
             issue_id: issue.id,
             issue_subject: issue.subject,
+            project_id: issue.project_id,
             journal_id: nil,
             changed_on: issue.created_on,
             old_login_id: nil,
@@ -74,19 +79,6 @@ class IssueAssignedHistory
   end
 
   private
-
-  def self.to_issue_subject(issue_id, issue_subject_cache)
-
-    issue_subject = issue_subject_cache[issue_id]
-
-    if issue_subject.nil?
-      issue = Issue.find_by_id(issue_id)
-      issue_subject = issue.subject
-      issue_subject_cache[issue_id] = issue.subject
-    end
-    
-    issue_subject
-  end
 
   def self.to_login_id(user_id, login_id_cache)
 
