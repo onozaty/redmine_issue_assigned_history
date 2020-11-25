@@ -1,0 +1,34 @@
+api.array :histories, api_meta(:total_count => @histories.count) do
+  @histories.each do |history|
+    api.history do
+      api.issue do
+        api.id history.issue.id
+        api.subject history.issue.subject
+        api.status_id history.issue.status.id
+        api.status_name history.issue.status.name
+      end
+      api.journal_id history.journal_id
+      api.changed_on history.changed_on
+      api.old_assigned_to do
+        if history.old_assigned_to.present?
+          api.id history.old_assigned_to.id
+          api.login history.old_assigned_to.login
+          api.firstname history.old_assigned_to.firstname
+          api.lastname history.old_assigned_to.lastname
+        end
+      end
+      api.new_assigned_to do
+        if history.new_assigned_to.present?
+          api.id history.new_assigned_to.id
+          api.login history.new_assigned_to.login
+          api.firstname history.new_assigned_to.firstname
+          api.lastname history.new_assigned_to.lastname
+        end
+      end
+      api.project do
+        api.id history.issue.project_id
+        api.identifier history.issue.project.identifier
+      end
+    end
+  end
+end
