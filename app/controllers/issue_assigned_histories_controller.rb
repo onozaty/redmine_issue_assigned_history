@@ -1,6 +1,5 @@
 class IssueAssignedHistoriesController < ApplicationController
 
-  before_action :authorize, :except => [:index]
   accept_api_auth :index
 
   def index
