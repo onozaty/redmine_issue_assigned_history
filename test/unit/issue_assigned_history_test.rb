@@ -1,7 +1,12 @@
 require File.expand_path('../../test_helper', __FILE__)
 
 class IssueAssignedHistoryTest < ActiveSupport::TestCase
-  fixtures :projects, :users, :enabled_modules, :roles, :members, :member_roles, :issue_statuses, :issues, :journals, :journal_details
+  fixtures :projects, :users, :enabled_modules, :roles, :members, :member_roles, :issue_statuses
+
+  fixture_dir = File.dirname(__FILE__) + '/../fixtures/unit'
+  ActiveRecord::FixtureSet.create_fixtures(fixture_dir, 'issues')
+  ActiveRecord::FixtureSet.create_fixtures(fixture_dir, 'journals')
+  ActiveRecord::FixtureSet.create_fixtures(fixture_dir, 'journal_details')
 
   def setup
 
