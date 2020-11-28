@@ -89,16 +89,17 @@ class IssueAssignedHistoryTest < ActiveSupport::TestCase
     User.current = User.find(1)
 
     expected = [
-      @history_issue2_created,
-      @history_issue3_journal2,
-      @history_issue4_created,
-      @history_issue5_created,
-      @history_issue4_journal3,
-      @history_issue5_journal4,
-      @history_issue6_journal5,
-      @history_issue6_journal6,
+      @history_issue6_journal8,
       @history_issue6_journal7,
-      @history_issue6_journal8]
+      @history_issue6_journal6,
+      @history_issue6_journal5,
+      @history_issue5_journal4,
+      @history_issue4_journal3,
+      @history_issue5_created,
+      @history_issue4_created,
+      @history_issue3_journal2,
+      @history_issue2_created
+    ]
 
     histories = IssueAssignedHistory.after(Time.parse("2020-11-01 11:00:00 +00:00"))
 
@@ -110,12 +111,13 @@ class IssueAssignedHistoryTest < ActiveSupport::TestCase
     User.current = User.find(1)
 
     expected = [
-      @history_issue4_journal3,
-      @history_issue5_journal4,
-      @history_issue6_journal5,
-      @history_issue6_journal6,
+      @history_issue6_journal8,
       @history_issue6_journal7,
-      @history_issue6_journal8]
+      @history_issue6_journal6,
+      @history_issue6_journal5,
+      @history_issue5_journal4,
+      @history_issue4_journal3
+    ]
 
     histories = IssueAssignedHistory.after(Time.parse("2020-11-03 11:00:00 +00:00"))
 
@@ -127,10 +129,11 @@ class IssueAssignedHistoryTest < ActiveSupport::TestCase
     User.current = User.find(3) # project_id:1 しかみえない
 
     expected = [
-      @history_issue2_created,
-      @history_issue3_journal2,
+      @history_issue4_journal3,
       @history_issue4_created,
-      @history_issue4_journal3]
+      @history_issue3_journal2,
+      @history_issue2_created
+    ]
 
     histories = IssueAssignedHistory.after(Time.parse("2020-11-01 11:00:00 +00:00"))
 

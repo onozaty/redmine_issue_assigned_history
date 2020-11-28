@@ -64,7 +64,7 @@ class IssueAssignedHistory
       end
     end
     
-    histories.sort_by{|history| [history.changed_on, history.journal_id]}
+    histories.sort_by{|history| [history.changed_on, history.journal_id]}.reverse
   end
 
   def ==(other)
