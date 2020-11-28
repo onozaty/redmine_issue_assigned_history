@@ -10,8 +10,6 @@ class IssueAssignedHistoryTest < ActiveSupport::TestCase
 
   def setup
 
-    ActiveRecord::Base.logger = Logger.new(STDOUT)
-
     issue2 = Issue.find_by_id(2)
     issue3 = Issue.find_by_id(3)
     issue4 = Issue.find_by_id(4)
@@ -82,6 +80,8 @@ class IssueAssignedHistoryTest < ActiveSupport::TestCase
       changed_on: Time.parse("2020-11-05 19:00:00 +00:00"),
       old_assigned_to: nil,
       new_assigned_to: user3)
+
+    # ActiveRecord::Base.logger = Logger.new(STDOUT)
   end
 
   def test_after
