@@ -2,11 +2,6 @@
 
 チケットの担当者の変更履歴をAPIとして提供する[Redmine](http://www.redmine.org)のプラグインです。
 
-下記ツール(実装中)と組み合わせて利用することで、担当者の変更をチャットに通知できるようになります。
-
-* https://github.com/onozaty/redmine-issue-assign-notifier
-
-
 ## インストール方法
 
 Redmineのプラグインディレクトリに、本リポジトリをクローンします。
@@ -28,6 +23,7 @@ git clone https://github.com/onozaty/redmine_issue_assigned_history.git
 {
     "histories": [
         {
+            "type": "change",
             "issue": {
                 "id": 10,
                 "subject": "YYY",
@@ -54,6 +50,7 @@ git clone https://github.com/onozaty/redmine_issue_assigned_history.git
             }
         },
         {
+            "type": "change",
             "issue": {
                 "id": 10,
                 "subject": "YYY",
@@ -75,6 +72,7 @@ git clone https://github.com/onozaty/redmine_issue_assigned_history.git
             }
         },
         {
+            "type": "new",
             "issue": {
                 "id": 9,
                 "subject": "XXX",
@@ -100,8 +98,7 @@ git clone https://github.com/onozaty/redmine_issue_assigned_history.git
 }
 ```
 
-`old_assigned_to`に変更前の担当者、`new_assigned_to`に変更後の担当者の情報が入ります。
-`changed_on`は変更されたタイミングとなります。
+`old_assigned_to`に変更前の担当者、`new_assigned_to`に変更後の担当者の情報が入ります。`changed_on`は変更されたタイミングとなります。
 
 `issue`、`project` は変更時の情報ではなく、現在の情報になります。
 

@@ -1,6 +1,8 @@
 api.array :histories, api_meta(:total_count => @histories.count) do
   @histories.each do |history|
     api.history do
+      api.type history.type
+
       api.issue do
         api.id history.issue.id
         api.subject history.issue.subject

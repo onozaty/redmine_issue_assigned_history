@@ -39,6 +39,7 @@ class IssueAssignedHistoriesControllerTest < Redmine::ControllerTest
     assert_equal(
       [
         {
+          'type' => 'change',
           'issue' => {'id' => 2, 'subject' => 'issue2', 'status_id' => 1, 'status_name' => 'New'},
           'journal_id' => 4,
           'changed_on' => @journal4.created_on.iso8601,
@@ -64,6 +65,7 @@ class IssueAssignedHistoriesControllerTest < Redmine::ControllerTest
     assert_equal(
       [
         {
+          'type' => 'change',
           'issue' => {'id'=> 2, 'subject'=> 'issue2', 'status_id'=> 1, 'status_name'=> 'New'},
           'journal_id'=> 4,
           'changed_on'=> @journal4.created_on.iso8601,
@@ -72,6 +74,7 @@ class IssueAssignedHistoriesControllerTest < Redmine::ControllerTest
           'project'=> {'id'=> 2, 'identifier'=> 'onlinestore'}
         },
         {
+          'type' => 'change',
           'issue' => {'id'=> 2, 'subject'=> 'issue2', 'status_id'=> 1, 'status_name'=> 'New'},
           'journal_id'=> 3,
           'changed_on'=> @journal3.created_on.iso8601,
@@ -80,6 +83,7 @@ class IssueAssignedHistoriesControllerTest < Redmine::ControllerTest
           'project'=> {'id'=> 2, 'identifier'=> 'onlinestore'}
         },
         {
+          'type' => 'new',
           'issue' => {'id'=> 1, 'subject'=> 'issue1', 'status_id'=> 2, 'status_name'=> 'Assigned'},
           'journal_id'=> nil,
           'changed_on'=> @issue1.created_on.iso8601,
@@ -105,6 +109,7 @@ class IssueAssignedHistoriesControllerTest < Redmine::ControllerTest
     assert_equal(
       [
         {
+          'type' => 'change',
           'issue' => {'id'=> 2, 'subject'=> 'issue2', 'status_id'=> 1, 'status_name'=> 'New'},
           'journal_id'=> 4,
           'changed_on'=> @journal4.created_on.iso8601,
@@ -113,6 +118,7 @@ class IssueAssignedHistoriesControllerTest < Redmine::ControllerTest
           'project'=> {'id'=> 2, 'identifier'=> 'onlinestore'}
         },
         {
+          'type' => 'change',
           'issue' => {'id'=> 2, 'subject'=> 'issue2', 'status_id'=> 1, 'status_name'=> 'New'},
           'journal_id'=> 3,
           'changed_on'=> @journal3.created_on.iso8601,
@@ -121,6 +127,7 @@ class IssueAssignedHistoriesControllerTest < Redmine::ControllerTest
           'project'=> {'id'=> 2, 'identifier'=> 'onlinestore'}
         },
         {
+          'type' => 'new',
           'issue' => {'id'=> 1, 'subject'=> 'issue1', 'status_id'=> 2, 'status_name'=> 'Assigned'},
           'journal_id'=> nil,
           'changed_on'=> @issue1.created_on.iso8601,
@@ -129,6 +136,7 @@ class IssueAssignedHistoriesControllerTest < Redmine::ControllerTest
           'project'=> {'id'=> 1, 'identifier'=> 'ecookbook'}
         },
         {
+          'type' => 'change',
           'issue' => {'id'=> 2, 'subject'=> 'issue2', 'status_id'=> 1, 'status_name'=> 'New'},
           'journal_id'=> 2,
           'changed_on'=> @journal2.created_on.iso8601,

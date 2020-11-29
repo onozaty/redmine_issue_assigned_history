@@ -1,8 +1,9 @@
 class IssueAssignedHistory
 
-  attr_reader :issue, :journal_id, :changed_on, :old_assigned_to, :new_assigned_to
+  attr_reader :type, :issue, :journal_id, :changed_on, :old_assigned_to, :new_assigned_to
 
-  def initialize(issue:, journal_id:, changed_on:, old_assigned_to:, new_assigned_to:)
+  def initialize(type:, issue:, journal_id:, changed_on:, old_assigned_to:, new_assigned_to:)
+    @type = type
     @issue = issue
     @journal_id = journal_id
     @changed_on = changed_on
@@ -31,6 +32,7 @@ class IssueAssignedHistory
 
     histories = journals.map do |journal|
       IssueAssignedHistory.new(
+        type: 'change',
         issue: journal.issue,
         journal_id: journal.id,
         changed_on: journal.created_on,
@@ -46,6 +48,7 @@ class IssueAssignedHistory
         # Journalでの履歴になくて、Issueでアサインされている場合
         histories.push(
           IssueAssignedHistory.new(
+            type: 'new',
             issue: issue,
             journal_id: nil,
             changed_on: issue.created_on,
@@ -56,6 +59,7 @@ class IssueAssignedHistory
         # Journalでの履歴にあって、変更前の値が設定されていた場合
         histories.push(
           IssueAssignedHistory.new(
+            type: 'new',
             issue: issue,
             journal_id: nil,
             changed_on: issue.created_on,
@@ -68,7 +72,7 @@ class IssueAssignedHistory
   end
 
   def ==(other)
-    issue == other.issue && journal_id == other.journal_id && changed_on == other.changed_on &&
+    type == other.type && issue == other.issue && journal_id == other.journal_id && changed_on == other.changed_on &&
       old_assigned_to == other.old_assigned_to && new_assigned_to == other.new_assigned_to
   end
 
