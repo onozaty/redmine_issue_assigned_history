@@ -19,7 +19,7 @@ journals_03:
   journalized_type: Issue
   user_id: 1
   notes: 
-  created_on: <%= 8.minute.ago.to_s(:db) %>
+  created_on: <%= 6.minute.ago.to_s(:db) %>
 journals_04:
   id: 4
   journalized_id: 2
