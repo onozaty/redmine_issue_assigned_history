@@ -112,12 +112,6 @@ git clone https://github.com/onozaty/redmine_issue_assigned_history.git
 
 * https://www.redmine.org/projects/redmine/wiki/rest_api#Authentication
 
-大きく分けると下記の2点となります。
-
-* 設定画面「API」タブの「RESTによるWebサービスを有効にする」をチェックし有効化
-* 認証情報設定してAPIを呼び出し
-    * APIアクセスキーまたはBasic認証を利用
-
 ## ライセンス
 
 MIT
