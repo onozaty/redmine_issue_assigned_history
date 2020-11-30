@@ -114,7 +114,7 @@ As with the other APIs, you will need the following.
 
 ## License
 
-MIT
+GNU General Public License v2.0
 
 ## Author
 

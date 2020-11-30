@@ -114,7 +114,7 @@ git clone https://github.com/onozaty/redmine_issue_assigned_history.git
 
 ## ライセンス
 
-MIT
+GNU General Public License v2.0
 
 ## 作者
 
