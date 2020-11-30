@@ -1,0 +1,64 @@
+--- 
+journals_01:
+  id: 1
+  journalized_id: 1
+  journalized_type: Issue
+  user_id: 1
+  notes: xxxx
+  created_on: 2020-11-01 11:00:00 +00:00
+journals_02:
+  id: 2
+  journalized_id: 3
+  journalized_type: Issue
+  user_id: 1
+  notes: 
+  created_on: 2020-11-01 13:00:00 +00:00
+journals_03:
+  id: 3
+  journalized_id: 4
+  journalized_type: Issue
+  user_id: 1
+  notes: 
+  created_on: 2020-11-03 11:00:00 +00:00
+journals_04:
+  id: 4
+  journalized_id: 5
+  journalized_type: Issue
+  user_id: 1
+  notes: 
+  created_on: 2020-11-03 11:00:00 +00:00
+journals_05:
+  id: 5
+  journalized_id: 6
+  journalized_type: Issue
+  user_id: 1
+  notes: 
+  created_on: 2020-11-03 12:00:00 +00:00
+journals_06:
+  id: 6
+  journalized_id: 6
+  journalized_type: Issue
+  user_id: 1
+  notes: 
+  created_on: 2020-11-03 20:00:00 +00:00
+journals_07:
+  id: 7
+  journalized_id: 6
+  journalized_type: Issue
+  user_id: 1
+  notes: 
+  created_on: 2020-11-04 00:00:00 +00:00
+journals_08:
+  id: 8
+  journalized_id: 6
+  journalized_type: Issue
+  user_id: 1
+  notes: 
+  created_on: 2020-11-05 19:00:00 +00:00
+journals_09:
+  id: 9
+  journalized_id: 1
+  journalized_type: Issue
+  user_id: 1
+  notes:
+  created_on: 2020-11-05 19:00:00 +00:00

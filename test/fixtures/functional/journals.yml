@@ -1,0 +1,29 @@
+--- 
+journals_01:
+  id: 1
+  journalized_id: 2
+  journalized_type: Issue
+  user_id: 1
+  notes: 
+  created_on: <%= 61.minute.ago.to_s(:db) %>
+journals_02:
+  id: 2
+  journalized_id: 2
+  journalized_type: Issue
+  user_id: 1
+  notes: 
+  created_on: <%= 25.minute.ago.to_s(:db) %>
+journals_03:
+  id: 3
+  journalized_id: 2
+  journalized_type: Issue
+  user_id: 1
+  notes: 
+  created_on: <%= 6.minute.ago.to_s(:db) %>
+journals_04:
+  id: 4
+  journalized_id: 2
+  journalized_type: Issue
+  user_id: 1
+  notes: 
+  created_on: <%= 0.minute.ago.to_s(:db) %>
